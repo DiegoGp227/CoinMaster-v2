@@ -33,7 +33,7 @@ services:
       DB_USER: ${MYSQL_USER}
       DB_PASSWORD: ${MYSQL_PASSWORD}
       DB_DATABASE: ${MYSQL_DATABASE}
-      JWT_SECRET: UnaClaveMuyDificil
+      JWT_SECRET: ${JWT_SECRET}
       TOKEN_EXPIRATION: 4h
     ports:
       - "${BACKEND_PORT}:4001"
