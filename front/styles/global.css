@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+  --main-black: #282828;
+  --hard-gray: #282828;
+  --soft-gray: #636363;
+  --main-white: #fff;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}

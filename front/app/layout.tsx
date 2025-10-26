@@ -2,7 +2,7 @@ import { SWRProvider } from "@/provier/swrProvider";
 import "../styles/global.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-// import Header from "./components/organisms/Header";
+import LayoutWrapper from "./components/layout/LayoutWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Taskly",
-  description: "Taskly app",
+  title: "FynUp",
+  description: "FynUp - Gestión de proyectos y tareas",
 };
 
 export default function RootLayout({
@@ -27,13 +27,10 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-hard-gray min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SWRProvider>
-          {/* <Header /> */}
-          <div className="max-w-screen-2xl mx-auto flex-1 w-full">
-            {children}
-          </div>
+          <LayoutWrapper>{children}</LayoutWrapper>
         </SWRProvider>
       </body>
     </html>
