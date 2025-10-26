@@ -10,8 +10,9 @@ const app = new Elysia()
       origin: [
         "http://localhost:3000",
         "http://localhost:5000",
-        "https://taskly.devdiego.work",
         "https://api.devdiego.work",
+        "https://coinmaster.devdiego.work",
+        "https://api.coinmaster.devdiego.work",
       ],
       credentials: true,
       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
