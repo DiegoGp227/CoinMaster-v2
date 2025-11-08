@@ -23,16 +23,13 @@ services:
     build: ./back
     container_name: fynup_backend
     restart: always
-    depends_on:
-      mysql:
-        condition: service_healthy
     environment:
       PORT: 4001
-      DB_HOST: mysql
-      DB_PORT: 3306
-      DB_USER: ${MYSQL_USER}
-      DB_PASSWORD: ${MYSQL_PASSWORD}
-      DB_DATABASE: ${MYSQL_DATABASE}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
       JWT_SECRET: ${JWT_SECRET}
       TOKEN_EXPIRATION: 4h
     ports:
