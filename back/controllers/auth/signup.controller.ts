@@ -23,7 +23,7 @@ const signup = async (req: Request, res: Response) => {
       return res.status(409).json({ message: "User already exists." });
     }
 
-    if (budget_reset_day < 0 && budget_reset_day > 31) {
+    if (budget_reset_day < 1 || budget_reset_day > 31) {
       return res
         .status(422)
         .json({ message: "invalid budget readjustment day" });
@@ -33,7 +33,7 @@ const signup = async (req: Request, res: Response) => {
     const hashedPassword = await bcryptjs.hash(password, salt);
 
     const insertQuery =
-      "INSERT INTO users (name, email, password_hash, currency, budget_reset_day) VALUES (?, ?, ?, ?, ?)";
+      "INSERT INTO users (username, email, hashedPassword, currency, budget_reset_day) VALUES (?, ?, ?, ?, ?)";
     const [insertResult]: any = await db.execute(insertQuery, [
       username,
       email,

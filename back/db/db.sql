@@ -3,7 +3,7 @@
 -- ============================================
 CREATE TABLE
     users (
-        id VARCHAR(36) PRIMARY KEY,
+        id INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(255) NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
         hashedPassword VARCHAR(255) NOT NULL,
@@ -19,8 +19,8 @@ CREATE TABLE
 -- ============================================
 CREATE TABLE
     categories (
-        id VARCHAR(36) PRIMARY KEY,
-        user_id VARCHAR(36) NOT NULL,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
         name VARCHAR(100) NOT NULL,
         type ENUM ('income', 'expense') NOT NULL,
         color VARCHAR(7) NOT NULL, -- HEX color #FF5733
@@ -36,8 +36,8 @@ CREATE TABLE
 -- ============================================
 CREATE TABLE
     subcategories (
-        id VARCHAR(36) PRIMARY KEY,
-        category_id VARCHAR(36) NOT NULL,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        category_id INT NOT NULL,
         name VARCHAR(100) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE,
@@ -50,10 +50,10 @@ CREATE TABLE
 -- ============================================
 CREATE TABLE
     transactions (
-        id VARCHAR(36) PRIMARY KEY,
-        user_id VARCHAR(36) NOT NULL,
-        category_id VARCHAR(36) NOT NULL,
-        subcategory_id VARCHAR(36) NOT NULL, -- OBLIGATORIO para gastos
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        category_id INT NOT NULL,
+        subcategory_id INT NOT NULL, -- OBLIGATORIO para gastos
         amount DECIMAL(15, 2) NOT NULL,
         type ENUM ('income', 'expense') NOT NULL,
         description TEXT,
@@ -74,9 +74,9 @@ CREATE TABLE
 -- ============================================
 CREATE TABLE
     budgets (
-        id VARCHAR(36) PRIMARY KEY,
-        user_id VARCHAR(36) NOT NULL,
-        category_id VARCHAR(36), -- NULL = presupuesto global
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        category_id INT, -- NULL = presupuesto global
         amount DECIMAL(15, 2) NOT NULL,
         period_start DATE NOT NULL,
         period_end DATE NOT NULL,
@@ -93,8 +93,8 @@ CREATE TABLE
 -- ============================================
 CREATE TABLE
     goals (
-        id VARCHAR(36) PRIMARY KEY,
-        user_id VARCHAR(36) NOT NULL,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
         name VARCHAR(100) NOT NULL,
         target_amount DECIMAL(15, 2) NOT NULL,
         current_amount DECIMAL(15, 2) DEFAULT 0,
@@ -111,9 +111,9 @@ CREATE TABLE
 -- ============================================
 CREATE TABLE
     goal_contributions (
-        id VARCHAR(36) PRIMARY KEY,
-        goal_id VARCHAR(36) NOT NULL,
-        transaction_id VARCHAR(36) NOT NULL, -- Transacción de INGRESO
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        goal_id INT NOT NULL,
+        transaction_id INT NOT NULL, -- Transacción de INGRESO
         amount DECIMAL(15, 2) NOT NULL,
         contribution_date DATE NOT NULL,
         note TEXT,
