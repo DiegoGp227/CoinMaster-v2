@@ -36,7 +36,7 @@ export default function Sidebar({ isOpen, onClose, pathname }: SidebarProps) {
       >
         {/* Header del Sidebar */}
         <div className="h-16 flex items-center justify-between px-4 border-b border-border">
-          <h1 className="text-white font-bold text-xl">FynUp</h1>
+          <h1 className="text-white font-bold text-xl">Coin Master</h1>
 
           {/* Botón cerrar en mobile */}
           <button
