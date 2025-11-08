@@ -12,7 +12,7 @@ export default function Header({ onMenuClick, pathname }: HeaderProps) {
         {/* Botón menú hamburguesa (solo mobile) */}
         <button
           onClick={onMenuClick}
-          className="lg:hidden text-white hover:text-soft-gray transition-colors p-2 -ml-2"
+          className="lg:hidden text-white hover:text-soft-gray transition-all p-2 -ml-2"
           aria-label="Abrir menú"
         >
           <svg

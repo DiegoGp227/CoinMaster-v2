@@ -41,7 +41,7 @@ export default function Sidebar({ isOpen, onClose, pathname }: SidebarProps) {
           {/* Botón cerrar en mobile */}
           <button
             onClick={onClose}
-            className="lg:hidden text-white hover:text-soft-gray transition-colors"
+            className="lg:hidden text-white hover:text-soft-gray transition-all"
             aria-label="Cerrar menú"
           >
             <GiHamburgerMenu />
