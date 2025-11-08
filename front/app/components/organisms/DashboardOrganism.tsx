@@ -3,10 +3,10 @@ import { useState } from "react";
 import FilterDashboard from "../molecules/FilterDashboard";
 import GeneralBalance from "../molecules/GeneralBalance";
 import GraphicOrganism from "./GraphicOrganism";
-export type FilterOption = "all" | "year" | "semester" | "quarter" | "month";
+export type FilterOption = "All" | "Year" | "Semester" | "Quarter" | "Month";
 
 export default function DashboardOrganism() {
-  const [filterDate, setFilterDate] = useState<FilterOption>("month");
+  const [filterDate, setFilterDate] = useState<FilterOption>("Month");
   return (
     <>
       <FilterDashboard setFilterDate={setFilterDate} filterDate={filterDate} />

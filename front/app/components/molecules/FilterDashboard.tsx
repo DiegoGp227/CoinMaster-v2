@@ -15,27 +15,27 @@ export default function FilterDashboard({
       <FilterButton
         filterDate={filterDate}
         setFilterDate={setFilterDate}
-        value="all"
+        value="All"
       />
       <FilterButton
         filterDate={filterDate}
         setFilterDate={setFilterDate}
-        value="year"
+        value="Year"
       />
       <FilterButton
         filterDate={filterDate}
         setFilterDate={setFilterDate}
-        value="semester"
+        value="Semester"
       />
       <FilterButton
         filterDate={filterDate}
         setFilterDate={setFilterDate}
-        value="quarter"
+        value="Quarter"
       />
       <FilterButton
         filterDate={filterDate}
         setFilterDate={setFilterDate}
-        value="month"
+        value="Month"
       />
     </div>
   );
