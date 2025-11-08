@@ -6,12 +6,12 @@ interface HeaderProps {
 
 export default function Header({ onMenuClick }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-30 h-16 bg-main-black border-b border-soft-gray/20 flex items-center px-4 lg:px-6">
+    <header className="sticky top-0 z-30 h-16 bg-black border-b border-border flex items-center px-4 lg:px-6">
       <div className="flex items-center justify-between w-full">
         {/* Botón menú hamburguesa (solo mobile) */}
         <button
           onClick={onMenuClick}
-          className="lg:hidden text-main-white hover:text-soft-gray transition-colors p-2 -ml-2"
+          className="lg:hidden text-white hover:text-soft-gray transition-colors p-2 -ml-2"
           aria-label="Abrir menú"
         >
           <svg
@@ -32,7 +32,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
 
         {/* Título o breadcrumb */}
         <div className="flex-1 lg:flex-none">
-          <h2 className="text-main-white font-semibold text-lg lg:text-xl ml-2 lg:ml-0">
+          <h2 className="text-white font-semibold text-lg lg:text-xl ml-2 lg:ml-0">
             Dashboard
           </h2>
         </div>

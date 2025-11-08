@@ -21,20 +21,20 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* Sidebar */}
       <aside
         className={`
-          fixed lg:sticky top-0 left-0 h-screen bg-main-black border-r border-soft-gray/20
+          fixed lg:sticky top-0 left-0 h-screen bg-black border-r border-border
           transition-transform duration-300 ease-in-out z-50
           w-64 flex flex-col
           ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
         `}
       >
         {/* Header del Sidebar */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-soft-gray/20">
-          <h1 className="text-main-white font-bold text-xl">FynUp</h1>
+        <div className="h-16 flex items-center justify-between px-4 border-b border-border">
+          <h1 className="text-white font-bold text-xl">FynUp</h1>
 
           {/* Botón cerrar en mobile */}
           <button
             onClick={onClose}
-            className="lg:hidden text-main-white hover:text-soft-gray transition-colors"
+            className="lg:hidden text-white hover:text-soft-gray transition-colors"
             aria-label="Cerrar menú"
           >
             <svg
@@ -59,8 +59,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           <ul className="space-y-2">
             <li>
               <a
-                href="/dashboard"
-                className="flex items-center gap-3 px-4 py-3 text-main-white hover:bg-soft-gray/20 rounded-lg transition-colors"
+                href="/"
+                className="flex items-center gap-3 px-4 py-3 text-white hover:bg-soft-gray/20 rounded-lg transition-colors"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +82,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             <li>
               <a
                 href="/projects"
-                className="flex items-center gap-3 px-4 py-3 text-main-white hover:bg-soft-gray/20 rounded-lg transition-colors"
+                className="flex items-center gap-3 px-4 py-3 text-white hover:bg-soft-gray/20 rounded-lg transition-colors"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -104,7 +104,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             <li>
               <a
                 href="/tasks"
-                className="flex items-center gap-3 px-4 py-3 text-main-white hover:bg-soft-gray/20 rounded-lg transition-colors"
+                className="flex items-center gap-3 px-4 py-3 text-white hover:bg-soft-gray/20 rounded-lg transition-colors"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +126,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             <li>
               <a
                 href="/team"
-                className="flex items-center gap-3 px-4 py-3 text-main-white hover:bg-soft-gray/20 rounded-lg transition-colors"
+                className="flex items-center gap-3 px-4 py-3 text-white hover:bg-soft-gray/20 rounded-lg transition-colors"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -148,7 +148,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             <li>
               <a
                 href="/settings"
-                className="flex items-center gap-3 px-4 py-3 text-main-white hover:bg-soft-gray/20 rounded-lg transition-colors"
+                className="flex items-center gap-3 px-4 py-3 text-white hover:bg-soft-gray/20 rounded-lg transition-colors"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -177,13 +177,13 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         </nav>
 
         {/* Footer del Sidebar (Usuario) */}
-        <div className="border-t border-soft-gray/20 p-4">
+        <div className="border-t border-border p-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-soft-gray flex items-center justify-center text-main-white font-semibold">
+            <div className="w-10 h-10 rounded-full bg-hard-gray flex items-center justify-center text-white font-semibold">
               U
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-main-white text-sm font-medium truncate">
+              <p className="text-white text-sm font-medium truncate">
                 Usuario
               </p>
               <p className="text-soft-gray text-xs truncate">user@fynup.com</p>

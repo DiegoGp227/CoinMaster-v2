@@ -1,10 +1,36 @@
 @import "tailwindcss";
 
 @theme {
-  --main-black: #282828;
-  --hard-gray: #282828;
-  --soft-gray: #636363;
-  --main-white: #fff;
+  /* Colores base */
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  /* Grises */
+  --color-hard-gray: #171a20;
+  --color-soft-gray: #9ca3af;
+  --color-light-gray: #e5e7eb;
+
+  /* Bordes */
+  --color-border: #374151;
+
+  /* Colores principales */
+  --color-blue: #3b82f6;
+  --color-green: #10b981;
+  --color-red: #ef4444;
+  --color-yellow: #f59e0b;
+  --color-purple: #8b5cf6;
+
+  /* Colores financieros */
+  --color-income: #22c55e;
+  --color-expense: #ef4444;
+  --color-savings: #3b82f6;
+  --color-investment: #8b5cf6;
+
+  /* Estados */
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
 }
 
 body {
