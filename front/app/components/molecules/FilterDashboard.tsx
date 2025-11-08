@@ -15,8 +15,8 @@ export default function FilterDashboard({
         onClick={() => {
           setFilterDate("all");
         }}
-        className={`w-24 h-10 bg-black text-white rounded-4xl border-2 border-black hover:border-blue transition duration-500 ${
-          filterDate === "all" ? "border-blue" : ""
+        className={`w-24 h-10 bg-black text-white rounded-4xl border-2 border-black hover:border-soft-gray transition duration-500 ${
+          filterDate === "all" ? "border-soft-gray" : ""
         }`}
       >
         All
@@ -25,8 +25,8 @@ export default function FilterDashboard({
         onClick={() => {
           setFilterDate("year");
         }}
-        className={`w-24 h-10 bg-black text-white rounded-4xl border-2 border-black hover:border-blue transition duration-500 ${
-          filterDate === "year" ? "border-blue" : ""
+        className={`w-24 h-10 bg-black text-white rounded-4xl border-2 border-black hover:border-soft-gray transition duration-500 ${
+          filterDate === "year" ? "border-soft-gray" : ""
         }`}
       >
         Year
@@ -35,8 +35,8 @@ export default function FilterDashboard({
         onClick={() => {
           setFilterDate("semester");
         }}
-        className={`w-24 h-10 bg-black text-white rounded-4xl border-2 border-black hover:border-blue transition duration-500 ${
-          filterDate === "semester" ? "border-blue" : ""
+        className={`w-24 h-10 bg-black text-white rounded-4xl border-2 border-black hover:border-soft-gray transition duration-500 ${
+          filterDate === "semester" ? "border-soft-gray" : ""
         }`}
       >
         Semester
@@ -45,8 +45,8 @@ export default function FilterDashboard({
         onClick={() => {
           setFilterDate("quarter");
         }}
-        className={`w-24 h-10 bg-black text-white rounded-4xl border-2 border-black hover:border-blue transition duration-500 ${
-          filterDate === "quarter" ? "border-blue" : ""
+        className={`w-24 h-10 bg-black text-white rounded-4xl border-2 border-black hover:border-soft-gray transition duration-500 ${
+          filterDate === "quarter" ? "border-soft-gray" : ""
         }`}
       >
         Quarter
@@ -55,8 +55,8 @@ export default function FilterDashboard({
         onClick={() => {
           setFilterDate("month");
         }}
-        className={`w-24 h-10 bg-black text-white rounded-4xl border-2 border-black hover:border-blue transition duration-500 ${
-          filterDate === "month" ? "border-blue" : ""
+        className={`w-24 h-10 bg-black text-white rounded-4xl border-2 border-black hover:border-soft-gray transition duration-500 ${
+          filterDate === "month" ? "border-soft-gray" : ""
         }`}
       >
         Month

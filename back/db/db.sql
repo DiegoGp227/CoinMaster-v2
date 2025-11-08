@@ -102,3 +102,40 @@ CREATE TABLE goal_contributions (
     INDEX idx_goal (goal_id),
     INDEX idx_transaction (transaction_id)
 );
+
+-- ============================================
+-- DEUDAS
+-- ============================================
+CREATE TABLE debts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    creditor VARCHAR(100),
+    total_amount DECIMAL(15, 2) NOT NULL,
+    paid_amount DECIMAL(15, 2) DEFAULT 0,
+    interest_rate DECIMAL(5, 2) DEFAULT 0,
+    deadline DATE NOT NULL,
+    status ENUM('active', 'paid', 'archived') DEFAULT 'active',
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    INDEX idx_user_status (user_id, status)
+);
+
+-- ============================================
+-- PAGOS DE DEUDAS
+-- ============================================
+CREATE TABLE debt_payments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    debt_id INT NOT NULL,
+    transaction_id INT NOT NULL,
+    amount DECIMAL(15, 2) NOT NULL,
+    payment_date DATE NOT NULL,
+    note TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (debt_id) REFERENCES debts(id) ON DELETE CASCADE,
+    FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE,
+    INDEX idx_debt (debt_id),
+    INDEX idx_transaction (transaction_id)
+);
