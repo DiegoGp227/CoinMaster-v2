@@ -19,7 +19,7 @@ const login = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const hashedPassword = user[0].password_hash;
+    const hashedPassword = user[0].hashedPassword;
     const isMatch = await bcryptjs.compare(password, hashedPassword);
 
     if (!isMatch) {
@@ -33,12 +33,14 @@ const login = async (req: Request, res: Response) => {
     );
 
     return res.status(200).json({
-      message: "Login successful",
+      message: "Login successful.",
+      userId: user[0].id,
       token,
       userInfo: {
-        id: user[0].id,
-        name: user[0].name,
+        username: user[0].username,
         email: user[0].email,
+        currency: user[0].currency,
+        budget_reset_day: user[0].budget_reset_day,
       },
     });
   } catch (error) {
