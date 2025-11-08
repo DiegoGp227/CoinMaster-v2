@@ -1,4 +1,3 @@
-import { usePathname } from "next/navigation";
 import GenericLink from "../atoms/GenericLink";
 import { ImHome } from "react-icons/im";
 import { IoMdSettings } from "react-icons/io";
@@ -12,11 +11,10 @@ import { GiHamburgerMenu } from "react-icons/gi";
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
+  pathname: string;
 }
 
-export default function Sidebar({ isOpen, onClose }: SidebarProps) {
-  const pathname = usePathname();
-
+export default function Sidebar({ isOpen, onClose, pathname }: SidebarProps) {
   return (
     <>
       {/* Overlay para mobile */}

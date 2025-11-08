@@ -2,9 +2,10 @@
 
 interface HeaderProps {
   onMenuClick: () => void;
+  pathname: string;
 }
 
-export default function Header({ onMenuClick }: HeaderProps) {
+export default function Header({ onMenuClick, pathname }: HeaderProps) {
   return (
     <header className="sticky top-0 z-30 h-16 bg-black border-b border-border flex items-center px-4 lg:px-6">
       <div className="flex items-center justify-between w-full">
@@ -33,7 +34,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
         {/* Título o breadcrumb */}
         <div className="flex-1 lg:flex-none">
           <h2 className="text-white font-semibold text-lg lg:text-xl ml-2 lg:ml-0">
-            Dashboard
+            {pathname === "/" ? "Dashboard" : pathname.charAt(1).toUpperCase() + pathname.slice(2)}
           </h2>
         </div>
       </div>
