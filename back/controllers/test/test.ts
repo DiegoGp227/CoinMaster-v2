@@ -1,14 +1,13 @@
-import pool from "../../db/db";
+import { Request, Response } from "express";
+import pool from "../../db/db.js";
 
-const dbCheck = async ({ set }: { set: any }) => {
+const dbCheck = async (req: Request, res: Response) => {
   try {
     const [rows] = await pool.query("SELECT 1 AS ok");
-    set.status = 200;
-    return { status: "success", result: rows };
+    res.status(200).json({ status: "success", result: rows });
   } catch (error) {
     console.error("❌ Error al conectar con MySQL:", error);
-    set.status = 500;
-    return { status: "error", message: "No se pudo conectar a la base de datos" };
+    res.status(500).json({ status: "error", message: "No se pudo conectar a la base de datos" });
   }
 };
 

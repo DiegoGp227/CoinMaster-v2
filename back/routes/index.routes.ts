@@ -1,11 +1,14 @@
-import { Elysia } from "elysia";
-import dbCheck from "../controllers/test/test";
-import signup from "../controllers/auth/signup.controller";
+import { Router } from "express";
+import dbCheck from "../controllers/test/test.js";
+import signup from "../controllers/auth/signup.controller.js";
+import login from "../controllers/auth/login.contoller.js";
 
-export const router = new Elysia({ prefix: "/api" })
-  //Auth
-  //   .post("/login", login)
-  .post("/signup", signup)
+export const router = Router();
 
-  .get("/db", dbCheck)
-  .get("/back", () => "Test route is working");
+// Auth routes
+router.post("/api/signup", signup);
+router.post("/api/login", login);
+
+// Test routes
+router.get("/api/db", dbCheck);
+router.get("/api/back", (req, res) => res.send("Test route is working"));

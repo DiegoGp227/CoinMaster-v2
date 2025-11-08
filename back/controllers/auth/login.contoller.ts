@@ -1,46 +1,38 @@
+import { Request, Response } from "express";
 import bcryptjs from "bcryptjs";
-import db from "../../db/db";
+import db from "../../db/db.js";
 import jwt from "jsonwebtoken";
-import type { SignOptions, Secret } from "jsonwebtoken";
-import type ms from "ms";
 
-const JWT_SECRET = process.env.JWT_SECRET as Secret;
-const TOKEN_EXPIRATION = (process.env.TOKEN_EXPIRATION ||
-  "1h") as ms.StringValue;
+const JWT_SECRET = process.env.JWT_SECRET as string;
 
-const login = async ({ body, set }: { body: any; set: any }) => {
-  const { email, password } = body;
+const login = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
 
   if (!email || !password) {
-    set.status = 400;
-    return { message: "Email and password are required." };
+    return res.status(400).json({ message: "Email and password are required." });
   }
 
   try {
     const [user]: any = await db.execute("SELECT * FROM users WHERE email = ?", [email]);
 
     if (!user || user.length === 0) {
-      set.status = 404;
-      return { message: "User not found" };
+      return res.status(404).json({ message: "User not found" });
     }
 
     const hashedPassword = user[0].password_hash;
     const isMatch = await bcryptjs.compare(password, hashedPassword);
 
     if (!isMatch) {
-      set.status = 401;
-      return { message: "Invalid password" };
+      return res.status(401).json({ message: "Invalid password" });
     }
 
-    const options: SignOptions = { expiresIn: TOKEN_EXPIRATION };
     const token = jwt.sign(
       { id: user[0].id, email: user[0].email },
       JWT_SECRET,
-      options
+      { expiresIn: (process.env.TOKEN_EXPIRATION || "1h") as any }
     );
 
-    set.status = 200;
-    return {
+    return res.status(200).json({
       message: "Login successful",
       token,
       userInfo: {
@@ -48,11 +40,10 @@ const login = async ({ body, set }: { body: any; set: any }) => {
         name: user[0].name,
         email: user[0].email,
       },
-    };
+    });
   } catch (error) {
     console.error("Error in the server:", error);
-    set.status = 500;
-    return { message: "Internal server error" };
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
