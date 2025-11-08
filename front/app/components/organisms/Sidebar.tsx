@@ -1,6 +1,13 @@
-"use client";
-
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import GenericLink from "../atoms/GenericLink";
+import { ImHome } from "react-icons/im";
+import { IoMdSettings } from "react-icons/io";
+import { FaTags } from "react-icons/fa";
+import { BsPiggyBankFill } from "react-icons/bs";
+import { GoAlertFill } from "react-icons/go";
+import { BiSolidReport } from "react-icons/bi";
+import { FaMoneyBillTransfer } from "react-icons/fa6";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -8,6 +15,8 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+  const pathname = usePathname();
+
   return (
     <>
       {/* Overlay para mobile */}
@@ -37,20 +46,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             className="lg:hidden text-white hover:text-soft-gray transition-colors"
             aria-label="Cerrar menú"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            <GiHamburgerMenu />
           </button>
         </div>
 
@@ -58,120 +54,60 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         <nav className="flex-1 overflow-y-auto p-4">
           <ul className="space-y-2">
             <li>
-              <a
+              <GenericLink
                 href="/"
-                className="flex items-center gap-3 px-4 py-3 text-white hover:bg-soft-gray/20 rounded-lg transition-colors"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                  />
-                </svg>
-                <span>Dashboard</span>
-              </a>
+                Icon={<ImHome />}
+                text="Dashboard"
+                active={pathname === "/"}
+              />
             </li>
             <li>
-              <a
-                href="/projects"
-                className="flex items-center gap-3 px-4 py-3 text-white hover:bg-soft-gray/20 rounded-lg transition-colors"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                  />
-                </svg>
-                <span>Proyectos</span>
-              </a>
+              <GenericLink
+                href="/transactions"
+                Icon={<FaMoneyBillTransfer />}
+                text="Transactions"
+                active={pathname === "/transactions"}
+              />
             </li>
             <li>
-              <a
-                href="/tasks"
-                className="flex items-center gap-3 px-4 py-3 text-white hover:bg-soft-gray/20 rounded-lg transition-colors"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                  />
-                </svg>
-                <span>Tareas</span>
-              </a>
+              <GenericLink
+                href="/categories"
+                Icon={<FaTags />}
+                text="Categories"
+                active={pathname === "/categories"}
+              />
             </li>
             <li>
-              <a
-                href="/team"
-                className="flex items-center gap-3 px-4 py-3 text-white hover:bg-soft-gray/20 rounded-lg transition-colors"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                  />
-                </svg>
-                <span>Equipo</span>
-              </a>
+              <GenericLink
+                href="/budgets"
+                Icon={<BsPiggyBankFill />}
+                text="Budgets"
+                active={pathname === "/budgets"}
+              />
             </li>
             <li>
-              <a
+              <GenericLink
+                href="/debts"
+                Icon={<GoAlertFill />}
+                text="Debts"
+                active={pathname === "/debts"}
+              />
+            </li>
+            <li>
+              <GenericLink
+                href="/reports"
+                Icon={<BiSolidReport />}
+                text="Reports"
+                active={pathname === "/reports"}
+              />
+            </li>
+            <li>
+              <GenericLink
                 href="/settings"
-                className="flex items-center gap-3 px-4 py-3 text-white hover:bg-soft-gray/20 rounded-lg transition-colors"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                <span>Configuración</span>
-              </a>
+                Icon={<IoMdSettings />}
+                text="Settings"
+                active={pathname === "/settings"}
+              />
             </li>
           </ul>
         </nav>
@@ -183,9 +119,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               U
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-white text-sm font-medium truncate">
-                Usuario
-              </p>
+              <p className="text-white text-sm font-medium truncate">Usuario</p>
               <p className="text-soft-gray text-xs truncate">user@fynup.com</p>
             </div>
           </div>

@@ -25,7 +25,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
         <Header onMenuClick={toggleSidebar} />
 
         {/* Contenido de la página */}
-        <main className="flex-1 overflow-y-auto bg-[#171a20]">
+        <main className="flex-1 overflow-y-auto bg-hard-gray">
             {children}
         </main>
       </div>
