@@ -1,6 +1,11 @@
 import LineCharts from "@/src/graphs/LineCharts";
+import BarCharts from "@/src/graphs/BarCharts";
 import Graphic from "../molecules/Graphic";
-import { icomesEspensesdata } from "@/src/test/data";
+import {
+  icomesEspensesdata,
+  expensesByCategoryData,
+  debtsAndGoalsData,
+} from "@/src/test/data";
 
 export default function GraphicOrganism() {
   return (
@@ -9,12 +14,10 @@ export default function GraphicOrganism() {
         <LineCharts data={icomesEspensesdata} />
       </Graphic>
       <Graphic title="Expenses by Category">
-        {/* Aquí puedes agregar otro componente de gráfica */}
-        <div></div>
+        <BarCharts data={expensesByCategoryData} />
       </Graphic>
       <Graphic title="Debts and Goals">
-        {/* Aquí puedes agregar otro componente de gráfica */}
-        <div></div>
+        <BarCharts data={debtsAndGoalsData} />
       </Graphic>
     </>
   );

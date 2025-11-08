@@ -1,4 +1,4 @@
-import { IIcomeExpenseData } from "../dashboard/types/types";
+import { IIcomeExpenseData, ICategoryData } from "../dashboard/types/types";
 
 export const icomesEspensesdata: IIcomeExpenseData[] = [
   { name: "Ene", incomes: 4000, expenses: 2400 },
@@ -8,4 +8,18 @@ export const icomesEspensesdata: IIcomeExpenseData[] = [
   { name: "May", incomes: 1890, expenses: 4800 },
   { name: "Jun", incomes: 2390, expenses: 3800 },
   { name: "Jul", incomes: 3490, expenses: 4300 },
+];
+
+export const expensesByCategoryData: ICategoryData[] = [
+  { category: "Comida", amount: 4500 },
+  { category: "Transporte", amount: 2300 },
+  { category: "Entretenimiento", amount: 1800 },
+  { category: "Servicios", amount: 3200 },
+  { category: "Salud", amount: 1500 },
+  { category: "Otros", amount: 900 },
+];
+
+export const debtsAndGoalsData: ICategoryData[] = [
+  { category: "Deudas", amount: 17000 },
+  { category: "Metas", amount: 53000 },
 ];

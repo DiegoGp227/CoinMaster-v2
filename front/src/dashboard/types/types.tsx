@@ -3,3 +3,8 @@ export interface IIcomeExpenseData {
   incomes: number;
   expenses: number;
 }
+
+export interface ICategoryData {
+  category: string;
+  amount: number;
+}
