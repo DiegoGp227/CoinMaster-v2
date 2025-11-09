@@ -1,4 +1,8 @@
-import { IIcomeExpenseData, ICategoryData } from "../dashboard/types/types";
+import {
+  IIcomeExpenseData,
+  ICategoryData,
+  IProgressData,
+} from "../dashboard/types/types";
 
 export const icomesEspensesdata: IIcomeExpenseData[] = [
   { name: "Ene", incomes: 4000, expenses: 2400 },
@@ -22,4 +26,22 @@ export const expensesByCategoryData: ICategoryData[] = [
 export const debtsAndGoalsData: ICategoryData[] = [
   { category: "Deudas", amount: 17000 },
   { category: "Metas", amount: 53000 },
+];
+
+export const goalsProgressData: IProgressData[] = [
+  { text: "Vacaciones", current: 3500, target: 8000 },
+  { text: "Fondo de Emergencia", current: 12000, target: 15000 },
+  { text: "Fondo de Emergencia", current: 12000, target: 15000 },
+  { text: "Fondo de Emergencia", current: 12000, target: 15000 },
+  { text: "Fondo de Emergencia", current: 12000, target: 15000 },
+  { text: "Casa Propia", current: 8500, target: 30000 },
+  { text: "Casa Propia", current: 8500, target: 30000 },
+  { text: "Casa Propia", current: 8500, target: 30000 },
+  { text: "Casa Propia", current: 8500, target: 30000 },
+  { text: "Casa Propia", current: 8500, target: 30000 },
+];
+
+export const debtsProgressData: IProgressData[] = [
+  { text: "Tarjeta de Crédito", current: 2000, target: 5000 },
+  { text: "Préstamo Auto", current: 7500, target: 12000 },
 ];
