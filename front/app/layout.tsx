@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FynUp",
-  description: "FynUp - Gestión de proyectos y tareas",
+  title: "Coin Master",
+  description: "Coin Master - Gestión de proyectos y tareas",
 };
 
 export default function RootLayout({
