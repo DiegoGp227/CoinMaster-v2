@@ -1,4 +1,4 @@
-import { Transaction } from "@/app/transactions/columns/transactionsColumns";
+import { Transaction } from "@/src/table/transactionsColumns";
 import {
   IIcomeExpenseData,
   ICategoryData,

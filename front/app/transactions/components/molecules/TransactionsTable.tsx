@@ -11,7 +11,7 @@ import {
 import {
   transactionsColumns,
   Transaction,
-} from "../../columns/transactionsColumns";
+} from "../../../../src/table/transactionsColumns";
 
 export type TransactionsTableProps = {
   initialData: Transaction[];
