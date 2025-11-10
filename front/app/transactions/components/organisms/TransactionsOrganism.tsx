@@ -5,6 +5,7 @@ import { useState } from "react";
 import Modal from "@/app/components/atoms/Modal";
 import NewTranssactions from "../atoms/NewTransactions";
 import TableDiv from "../molecules/TableDiv";
+import TransactionsTable from "../molecules/TransactionsTable";
 
 export default function TransactionsOrganism() {
   const [filterDate, setFilterDate] = useState<FilterOption>("Month");
@@ -18,9 +19,8 @@ export default function TransactionsOrganism() {
         setModalNewTransactions={() => setModalNewTransactions(true)}
       />
       <TableDiv title="History">
-        <div></div>{" "}
+        <TransactionsTable />
       </TableDiv>
-
 
       {modalNewTransactions ? (
         <Modal onClose={() => setModalNewTransactions(false)}>
