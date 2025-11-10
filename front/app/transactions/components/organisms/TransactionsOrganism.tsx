@@ -6,6 +6,7 @@ import Modal from "@/app/components/atoms/Modal";
 import NewTranssactions from "../atoms/NewTransactions";
 import TableDiv from "../molecules/TableDiv";
 import TransactionsTable from "../molecules/TransactionsTable";
+import { dataHistory } from "@/src/test/data";
 
 export default function TransactionsOrganism() {
   const [filterDate, setFilterDate] = useState<FilterOption>("Month");
@@ -19,7 +20,7 @@ export default function TransactionsOrganism() {
         setModalNewTransactions={() => setModalNewTransactions(true)}
       />
       <TableDiv title="History">
-        <TransactionsTable />
+        <TransactionsTable initialData={dataHistory}/>
       </TableDiv>
 
       {modalNewTransactions ? (

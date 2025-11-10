@@ -13,68 +13,14 @@ import {
   Transaction,
 } from "../../columns/transactionsColumns";
 
-type TransactionsTableProps = {
-  initialData?: Transaction[];
+export type TransactionsTableProps = {
+  initialData: Transaction[];
 };
 
 export default function TransactionsTable({
   initialData = [],
 }: TransactionsTableProps) {
-  // TODO: Reemplazar con datos reales del API
-  const [data, setData] = useState<Transaction[]>(
-    initialData.length > 0
-      ? initialData
-      : [
-          {
-            id: 1,
-            user_id: 1,
-            category_id: 1,
-            subcategory_id: 1,
-            amount: 50000,
-            type: "expense",
-            description: "Compra del supermercado",
-            date: "2025-01-15",
-            created_at: "2025-01-15T10:00:00",
-            updated_at: "2025-01-15T10:00:00",
-            category_name: "Alimentación",
-            subcategory_name: "Supermercado",
-            category_color: "#FF6B6B",
-            category_icon: "🛒",
-          },
-          {
-            id: 2,
-            user_id: 1,
-            category_id: 2,
-            subcategory_id: 3,
-            amount: 1500000,
-            type: "income",
-            description: "Salario mensual",
-            date: "2025-01-01",
-            created_at: "2025-01-01T08:00:00",
-            updated_at: "2025-01-01T08:00:00",
-            category_name: "Salario",
-            subcategory_name: "Sueldo",
-            category_color: "#4ECDC4",
-            category_icon: "💰",
-          },
-          {
-            id: 3,
-            user_id: 1,
-            category_id: 3,
-            subcategory_id: 5,
-            amount: 30000,
-            type: "expense",
-            description: "Gasolina",
-            date: "2025-01-10",
-            created_at: "2025-01-10T15:30:00",
-            updated_at: "2025-01-10T15:30:00",
-            category_name: "Transporte",
-            subcategory_name: "Combustible",
-            category_color: "#FFD93D",
-            category_icon: "⛽",
-          },
-        ]
-  );
+  const [data] = useState<Transaction[]>(initialData);
 
   const table = useReactTable({
     data,
