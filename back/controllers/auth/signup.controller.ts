@@ -6,7 +6,13 @@ import jwt from "jsonwebtoken";
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
 const signup = async (req: Request, res: Response) => {
-  const { username, email, password, currency, budget_reset_day } = req.body;
+  const {
+    username,
+    email,
+    password,
+    currency = "USD",
+    budget_reset_day = 1,
+  } = req.body;
 
   if (!username || !email || !password || !currency || !budget_reset_day) {
     return res.status(400).json({ message: "All fiels required." });
@@ -44,13 +50,9 @@ const signup = async (req: Request, res: Response) => {
 
     console.log("Usuario creado exitosamente con ID:", insertResult.insertId);
 
-    const token = jwt.sign(
-      { id: insertResult.insertId, email },
-      JWT_SECRET,
-      {
-        expiresIn: (process.env.TOKEN_EXPIRATION || "1h") as any,
-      }
-    );
+    const token = jwt.sign({ id: insertResult.insertId, email }, JWT_SECRET, {
+      expiresIn: (process.env.TOKEN_EXPIRATION || "1h") as any,
+    });
 
     return res.status(201).json({
       message: "User successfully created.",
