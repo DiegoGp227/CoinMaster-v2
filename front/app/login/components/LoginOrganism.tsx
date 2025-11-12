@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { LuSend } from "react-icons/lu";
 
 export default function LoginOrganism() {
@@ -53,6 +54,12 @@ export default function LoginOrganism() {
           Send
           <LuSend />
         </button>
+        <Link
+          href="/signup"
+          className="text-soft-gray font-bold hover:text-white transition-colors duration-500 group"
+        >
+          ¿Don't have an account? Create one
+        </Link>
       </form>
     </div>
   );

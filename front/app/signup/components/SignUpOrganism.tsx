@@ -15,7 +15,7 @@ export default function SignUpOrganism() {
         className="group border-2 border-soft-gray flex flex-col w-96 bg-hard-gray justify-center items-center p-5 gap-5 transition-colors duration-500
                            hover:border-white focus-within:border-white"
       >
-        <h1 className="text-4xl font-bold text-soft-gray transition-colors duration-500 group-hover:text-white group-focus-within:text-white">
+        <h1 className="text-4xl font-bold text-soft-gray transition-colors duration-500 group-hover:text-white group-focus-within:text-white mb-5">
           Sign Up
         </h1>
 
@@ -98,7 +98,12 @@ export default function SignUpOrganism() {
           Send
           <LuSend />
         </button>
-        <Link href="/login" className="text-soft-gray font-bold hover:text-white transition-colors duration-500 group">Login</Link>
+        <Link
+          href="/login"
+          className="text-soft-gray font-bold hover:text-white transition-colors duration-500 group"
+        >
+          ¿Do you have an account? Log in
+        </Link>
       </form>
     </div>
   );
