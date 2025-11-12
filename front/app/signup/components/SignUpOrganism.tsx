@@ -1,5 +1,12 @@
+"use client";
+
+import { currencies } from "@/src/data/data";
+import { useState } from "react";
 import { LuSend } from "react-icons/lu";
+
 export default function SignUpOrganism() {
+  const [currency, setCurrency] = useState("USD");
+
   return (
     <div className="flex justify-center items-center min-h-screen w-screen gap-5">
       <form
@@ -8,7 +15,7 @@ export default function SignUpOrganism() {
                            hover:border-white focus-within:border-white"
       >
         <h1 className="text-4xl font-bold text-soft-gray transition-colors duration-500 group-hover:text-white group-focus-within:text-white">
-          Login
+          Sign Up
         </h1>
 
         {/* Username */}
@@ -57,6 +64,28 @@ export default function SignUpOrganism() {
             className="px-2 py-2 bg-black text-white w-[350px] h-11 rounded-[5px] border-2 border-soft-gray
                                hover:border-white focus:border-white focus:outline-none transition-colors duration-500"
           />
+        </div>
+
+        {/* Currency */}
+        <div className="group/field flex flex-col items-center">
+          <label
+            htmlFor="currency"
+            className="text-soft-gray mb-1 transition-colors duration-500 group-focus-within/field:text-white group-hover/field:text-white"
+          >
+            Moneda
+          </label>
+          <select
+            id="currency"
+            value={currency}
+            onChange={(e) => setCurrency(e.target.value)}
+            className="px-2 py-2 bg-black text-white w-[350px] h-11 rounded-[5px] border-2 border-soft-gray hover:border-white focus:border-white focus:outline-none transition-colors duration-500"
+          >
+            {currencies.map(({ code, name, symbol }) => (
+              <option key={code} value={code}>
+                {code} — {name} ({symbol})
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Botón */}

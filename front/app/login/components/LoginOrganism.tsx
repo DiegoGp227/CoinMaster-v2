@@ -12,22 +12,6 @@ export default function LoginOrganism() {
           Login
         </h1>
 
-        {/* Username */}
-        <div className="group/field flex flex-col items-center">
-          <label
-            htmlFor="username"
-            className="text-soft-gray mb-1 transition-colors duration-500 group-focus-within/field:text-white group-hover/field:text-white"
-          >
-            User Name
-          </label>
-          <input
-            id="username"
-            type="text"
-            className="px-2 py-2 bg-black text-white w-[350px] h-11 rounded-[5px] border-2 border-soft-gray
-                       hover:border-white focus:border-white focus:outline-none transition-colors duration-500"
-          />
-        </div>
-
         {/* Email */}
         <div className="group/field flex flex-col items-center">
           <label
