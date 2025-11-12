@@ -16,6 +16,11 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const closeSidebar = () => setIsSidebarOpen(false);
 
+  // Si estamos en login o signup, no mostramos el layout general
+  if (pathname === "/login" || pathname === "/signup") {
+    return <main className="min-h-screen w-screen">{children}</main>;
+  }
+
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
@@ -28,10 +33,12 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
       {/* Contenedor principal */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <Header onMenuClick={toggleSidebar} pathname={pathname}/>
+        <Header onMenuClick={toggleSidebar} pathname={pathname} />
 
-        {/* Contenido de la página */}
-        <main className="flex-1 overflow-y-auto bg-hard-gray">{children}</main>
+        {/* Contenido */}
+        <main className="flex-1 overflow-y-auto bg-hard-gray">
+          {children}
+        </main>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import LoginOrganism from "../components/LoginOrganism";
+import LoginOrganism from "./components/LoginOrganism";
 
 export default function LoginPage() {
   return (
