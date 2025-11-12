@@ -1,2 +1,4 @@
 export const BaseURL =
-  process.env.NEXT_PUBLIC_API_URL || "http://192.168.0.3:4000";
+  process.env.NEXT_PUBLIC_API_URL || "";
+
+export const LoginURL = new URL("/api/login", BaseURL);
