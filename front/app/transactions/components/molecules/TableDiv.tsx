@@ -14,7 +14,7 @@ export default function TableDiv({ children, title }: ITableDivProps) {
             {title}
           </p>
         </div>
-        <div className="w-full h-[300px]">{children}</div>
+        <div className="w-full">{children}</div>
       </div>
     </div>
   );
