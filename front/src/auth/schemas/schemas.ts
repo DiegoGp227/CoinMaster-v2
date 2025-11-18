@@ -18,19 +18,14 @@ const credentialsSchema = z.object({
   password: z.string().min(8, "La contraseña debe tener al menos 8 caracteres"),
 });
 
-// 🔹 Signup (extiende credenciales y agrega username y confirmación)
-export const signupSchema = credentialsSchema
-  .extend({
-    username: z
-      .string()
-      .min(3, "El nombre de usuario debe tener al menos 3 caracteres")
-      .regex(/^[a-zA-Z0-9_]+$/, "Solo se permiten letras, números y guiones bajos"),
-    confirmPassword: z.string().nonempty("Debes confirmar tu contraseña"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Las contraseñas no coinciden",
-    path: ["confirmPassword"],
-  });
+// 🔹 Signup (extiende credenciales y agrega username y currency)
+export const signupSchema = credentialsSchema.extend({
+  username: z
+    .string()
+    .min(3, "El nombre de usuario debe tener al menos 3 caracteres")
+    .regex(/^[a-zA-Z0-9_]+$/, "Solo se permiten letras, números y guiones bajos"),
+  currency: z.string().min(1, "Debes seleccionar una moneda"),
+});
 
 // 🔹 Login (solo usa credenciales)
 export const loginSchema = credentialsSchema;

@@ -15,3 +15,10 @@ export interface IResposeAuth {
   token: string;
   userInfo: IUserInfo;
 }
+
+export interface IUserData {
+  username: string;
+  email: string;
+  password: string;
+  currency: string;
+}

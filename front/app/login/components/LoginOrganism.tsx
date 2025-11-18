@@ -1,6 +1,6 @@
 "use client"
 import FormLogin from "@/src/auth/form/FormLogin";
-import { useLogin } from "@/src/auth/services/Login";
+import { useLogin } from "@/src/auth/services/useLogin";
 import { ICredentials } from "@/src/auth/types/types";
 import { useRouter } from "next/navigation";
 
