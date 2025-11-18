@@ -50,9 +50,9 @@ export default function TabsLayout({
         <div
           className={`${
             tabOptions && "w-full"
-          } p-5 flex flex-col justify-center items-center bg-black relative max-w-[95vw] ${
+          } p-5 flex flex-col justify-center items-center  relative max-w-[95vw] ${
             tabOptions ? "rounded-[5px]" : "rounded-[5px]"
-          } pt-0 shadow-lg border-2 border-black hover:border-white transition-all duration-500 group hover:shadow-[0_0_10px_2px_rgba(156,163,175,0.3)]`}
+          } pt-0 `}
         >
           <div id="divToPrint" className="w-full">
             {children}
