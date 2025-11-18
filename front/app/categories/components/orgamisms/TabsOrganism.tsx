@@ -4,23 +4,18 @@ import TabsLayout from "@/src/categories/layouts/TabsLayout";
 import { useState } from "react";
 
 export default function TabsOrganism() {
-  const [activeTab, setActiveTab] = useState("Estimates");
-  const [searchValue, setSearchValue] = useState("");
+  const [activeTab, setActiveTab] = useState("bills");
 
   const navOptions = [
-    { label: "Estimates", value: "Estimates" },
-    { label: "Orders", value: "Orders" },
-    { label: "My Profile", value: "Profile" },
+    { label: "Bills", value: "bills" },
+    { label: "Icome", value: "icome" },
   ];
 
-  const handleSearch = (value: string) => {
-    setSearchValue(value);
-    console.log("Searching for:", value);
-  };
+
 
   const renderContent = () => {
     switch (activeTab) {
-      case "Estimates":
+      case "bills":
         return (
           <div className="w-full p-6">
             <h2 className="text-4xl font-bold mb-6">Our Products</h2>
@@ -44,7 +39,7 @@ export default function TabsOrganism() {
             </div>
           </div>
         );
-      case "Profile":
+      case "icome":
         return (
           <div className="w-full p-6">
             <h2 className="text-4xl font-bold mb-6">Our Products</h2>
@@ -79,7 +74,6 @@ export default function TabsOrganism() {
       onTabChange={setActiveTab}
       showSearch={true}
       searchLabel="Search:"
-      onSearch={handleSearch}
     >
       {renderContent()}
     </TabsLayout>
