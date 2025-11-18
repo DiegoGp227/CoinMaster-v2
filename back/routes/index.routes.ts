@@ -9,6 +9,8 @@ export const router = Router();
 router.post("/api/signup", signup);
 router.post("/api/login", login);
 
+//
+
 // Test routes
 router.get("/api/db", dbCheck);
 router.get("/api/back", (req, res) => res.send("Test route is working"));
