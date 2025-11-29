@@ -6,7 +6,6 @@ const PORT = process.env.PORT ? Number(process.env.PORT) : 4001;
 
 const app = express();
 
-// Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -24,8 +23,8 @@ app.use(
 
 // Routes
 app.use(router);
-app.get("/ping", (req, res) => res.send("pong"));
-app.all("*", (req, res) => {
+app.get("/ping", (_req, res) => res.send("pong"));
+app.all("*", (_req, res) => {
   res.status(404).json({
     message: "Escribe bien mono estupido",
   });

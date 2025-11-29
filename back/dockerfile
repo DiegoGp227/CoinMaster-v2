@@ -1,42 +1,85 @@
-# Stage 1: Build
+# ============================================
+# DOCKERFILE PARA BACKEND CON PRISMA
+# ============================================
+# Multi-stage build para optimizar el tamaño de la imagen
+
+# ============================================
+# Etapa 1: Builder
+# ============================================
+# Instala dependencias y genera cliente de Prisma
 FROM node:20-alpine AS builder
 
+# Instalar OpenSSL (requerido por Prisma)
+RUN apk add --no-cache openssl
+
 WORKDIR /app
 
-# Copia los archivos de dependencias
+# Copiar archivos de dependencias
 COPY package*.json ./
+COPY prisma.config.ts ./
+COPY prisma ./prisma
 
-# Instala todas las dependencias (incluyendo devDependencies)
+# Instalar todas las dependencias (incluyendo devDependencies)
 RUN npm ci
 
-# Copia el código fuente
+# Generar cliente de Prisma
+# IMPORTANTE: Esto debe ejecutarse DESPUÉS de instalar dependencias
+RUN npx prisma generate
+
+# Copiar el resto del código fuente
 COPY . .
 
-# Compila TypeScript a JavaScript
+# Compilar TypeScript a JavaScript
 RUN npm run build
 
-# Stage 2: Production
-FROM node:20-alpine
+# ============================================
+# Etapa 2: Producción
+# ============================================
+# Imagen final ligera con solo lo necesario
+FROM node:20-alpine AS production
+
+# Instalar OpenSSL (requerido por Prisma)
+RUN apk add --no-cache openssl
 
 WORKDIR /app
 
-# Copia los archivos de dependencias
+# Copiar archivos de configuración
 COPY package*.json ./
+COPY prisma.config.ts ./
+COPY prisma ./prisma
 
-# Instala solo dependencias de producción
+# Instalar SOLO dependencias de producción
 RUN npm ci --only=production
 
-# Copia los archivos compilados desde el stage de build
+# Copiar cliente de Prisma generado desde el builder
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+
+# Copiar código compilado desde el builder
 COPY --from=builder /app/dist ./dist
 
-# Copia el archivo SQL si es necesario para inicialización
-COPY db/db.sql ./db/db.sql
+# Crear usuario no-root para seguridad
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
 
-# Expone el puerto
+# Cambiar permisos
+RUN chown -R nodejs:nodejs /app
+
+# Cambiar a usuario no-root
+USER nodejs
+
+# Exponer puerto
 EXPOSE 4001
 
-# Usuario no-root para seguridad
-USER node
+# Variables de entorno por defecto (serán sobrescritas por docker-compose)
+ENV NODE_ENV=production
+ENV PORT=4001
 
-# Comando para iniciar el backend en producción
-CMD ["node", "dist/src/index.js"]
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+  CMD node -e "require('http').get('http://localhost:4001/ping', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
+
+# Script de inicio
+# 1. Aplica migraciones de Prisma (si existen)
+# 2. Inicia el servidor
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/index.js"]

@@ -28,18 +28,28 @@ services:
       mysql:
         condition: service_healthy
     environment:
+      # Prisma DATABASE_URL (formato completo)
+      DATABASE_URL: "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE}"
+      # Variables individuales (para compatibilidad con código legacy)
       PORT: 4001
       DB_HOST: mysql
       DB_PORT: 3306
       DB_USER: ${MYSQL_USER}
       DB_PASSWORD: ${MYSQL_PASSWORD}
       DB_DATABASE: ${MYSQL_DATABASE}
+      # JWT Configuration
       JWT_SECRET: ${JWT_SECRET}
-      TOKEN_EXPIRATION: 4h
+      TOKEN_EXPIRATION: ${TOKEN_EXPIRATION}
+      # Node environment
+      NODE_ENV: production
     ports:
       - "${BACKEND_PORT}:4001"
     networks:
       - coinmaster_network
+    # Montar el volumen de código para desarrollo (opcional - comentar en producción)
+    # volumes:
+    #   - ./back:/app
+    #   - /app/node_modules
 
   frontend:
     build: ./front

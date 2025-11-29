@@ -22,11 +22,11 @@
     "noImplicitOverride": true,
     "forceConsistentCasingInFileNames": true,
 
-    // Some stricter flags (disabled by default)
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
+    // Some stricter flags (habilitados para mejor calidad de código)
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "noPropertyAccessFromIndexSignature": false
   },
-  "include": ["src/**/*", "routes/**/*", "controllers/**/*", "db/**/*"],
+  "include": ["src/**/*", "routes/**/*", "controllers/**/*", "db/**/*", "services/**/*", "types/**/*", "validators/**/*"],
   "exclude": ["node_modules", "dist"]
 }

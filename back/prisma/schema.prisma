@@ -1,0 +1,275 @@
+// ============================================
+// CONFIGURACIÓN DE PRISMA
+// ============================================
+// Este archivo define el esquema de la base de datos usando Prisma ORM
+// Aprende más en: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+// ============================================
+// MODELO: User (Usuario)
+// ============================================
+// Representa a los usuarios de la aplicación
+// Cada usuario puede tener múltiples categorías, transacciones, presupuestos, metas y deudas
+model User {
+  id               Int      @id @default(autoincrement())
+  username         String   @db.VarChar(255)
+  email            String   @unique @db.VarChar(255)
+  hashedPassword   String   @db.VarChar(255)
+  // currency: Moneda preferida del usuario (ej: USD, EUR, COP)
+  currency         String   @default("COP") @db.VarChar(3)
+  // budgetResetDay: Día del mes en que se reinician los presupuestos (1-31)
+  budgetResetDay   Int      @default(1) @map("budget_reset_day")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  // Relaciones: Un usuario puede tener muchos...
+  categories       Category[]
+  transactions     Transaction[]
+  budgets          Budget[]
+  goals            Goal[]
+  debts            Debt[]
+
+  // Índices para optimizar consultas por email
+  @@index([email], name: "idx_email")
+  @@map("users") // Nombre de la tabla en la base de datos
+}
+
+// ============================================
+// MODELO: Category (Categoría)
+// ============================================
+// Categorías para clasificar transacciones (ej: Comida, Transporte, Salario)
+// Pueden ser de tipo 'income' (ingreso) o 'expense' (gasto)
+model Category {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  name      String   @db.VarChar(100)
+  // type: Define si es una categoría de ingreso o gasto
+  type      CategoryType
+  color     String   @db.VarChar(7) // Color en formato hexadecimal (ej: #FF5733)
+  icon      String?  @db.VarChar(50) // Nombre del ícono opcional
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relación: Una categoría pertenece a un usuario
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Relaciones: Una categoría puede tener muchas...
+  subcategories Subcategory[]
+  transactions  Transaction[]
+  budgets       Budget[]
+
+  // Restricción única: Un usuario no puede tener dos categorías con el mismo nombre y tipo
+  @@unique([userId, name, type], name: "unique_user_category")
+  // Índices para optimizar consultas
+  @@index([userId, type], name: "idx_user_type")
+  @@map("categories")
+}
+
+// ============================================
+// MODELO: Subcategory (Subcategoría)
+// ============================================
+// Subcategorías para clasificación más detallada (ej: Comida > Restaurantes)
+model Subcategory {
+  id         Int      @id @default(autoincrement())
+  categoryId Int      @map("category_id")
+  name       String   @db.VarChar(100)
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  // Relación: Una subcategoría pertenece a una categoría
+  category     Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  // Relación: Una subcategoría puede tener muchas transacciones
+  transactions Transaction[]
+
+  // Restricción única: Una categoría no puede tener subcategorías duplicadas
+  @@unique([categoryId, name], name: "unique_category_subcategory")
+  @@index([categoryId], name: "idx_category")
+  @@map("subcategories")
+}
+
+// ============================================
+// MODELO: Transaction (Transacción)
+// ============================================
+// Registros de ingresos y gastos de los usuarios
+model Transaction {
+  id            Int      @id @default(autoincrement())
+  userId        Int      @map("user_id")
+  categoryId    Int      @map("category_id")
+  subcategoryId Int      @map("subcategory_id")
+  // amount: Cantidad de dinero (máximo 15 dígitos, 2 decimales)
+  amount        Decimal  @db.Decimal(15, 2)
+  type          TransactionType
+  description   String?  @db.Text
+  date          DateTime @db.Date // Fecha de la transacción
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  // Relaciones
+  user         User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category     Category             @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  subcategory  Subcategory          @relation(fields: [subcategoryId], references: [id], onDelete: Restrict)
+
+  // Una transacción puede estar asociada a aportes de metas o pagos de deudas
+  goalContributions GoalContribution[]
+  debtPayments      DebtPayment[]
+
+  // Índices para optimizar consultas frecuentes
+  @@index([userId, date], name: "idx_user_date")
+  @@index([userId, type], name: "idx_user_type")
+  @@index([categoryId], name: "idx_category")
+  @@index([subcategoryId], name: "idx_subcategory")
+  @@map("transactions")
+}
+
+// ============================================
+// MODELO: Budget (Presupuesto)
+// ============================================
+// Presupuestos definidos por el usuario para controlar gastos
+model Budget {
+  id          Int      @id @default(autoincrement())
+  userId      Int      @map("user_id")
+  categoryId  Int?     @map("category_id") // Opcional: puede ser presupuesto general
+  amount      Decimal  @db.Decimal(15, 2)
+  periodStart DateTime @map("period_start") @db.Date
+  periodEnd   DateTime @map("period_end") @db.Date
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relaciones
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  // Restricción única: Un usuario no puede tener presupuestos duplicados para la misma categoría en el mismo período
+  @@unique([userId, categoryId, periodStart], name: "unique_user_category_period")
+  @@index([userId, periodStart, periodEnd], name: "idx_user_period")
+  @@map("budgets")
+}
+
+// ============================================
+// MODELO: Goal (Meta de Ahorro)
+// ============================================
+// Metas de ahorro que los usuarios quieren alcanzar
+model Goal {
+  id            Int        @id @default(autoincrement())
+  userId        Int        @map("user_id")
+  name          String     @db.VarChar(100)
+  targetAmount  Decimal    @map("target_amount") @db.Decimal(15, 2)
+  currentAmount Decimal    @default(0) @map("current_amount") @db.Decimal(15, 2)
+  deadline      DateTime   @db.Date
+  status        GoalStatus @default(active)
+  createdAt     DateTime   @default(now()) @map("created_at")
+  updatedAt     DateTime   @updatedAt @map("updated_at")
+
+  // Relaciones
+  user          User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  contributions GoalContribution[]
+
+  @@index([userId, status], name: "idx_user_status")
+  @@map("goals")
+}
+
+// ============================================
+// MODELO: GoalContribution (Aporte a Meta)
+// ============================================
+// Aportes realizados a metas de ahorro
+model GoalContribution {
+  id               Int      @id @default(autoincrement())
+  goalId           Int      @map("goal_id")
+  transactionId    Int      @map("transaction_id")
+  amount           Decimal  @db.Decimal(15, 2)
+  contributionDate DateTime @map("contribution_date") @db.Date
+  note             String?  @db.Text
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  // Relaciones
+  goal        Goal        @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  transaction Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  @@index([goalId], name: "idx_goal")
+  @@index([transactionId], name: "idx_transaction")
+  @@map("goal_contributions")
+}
+
+// ============================================
+// MODELO: Debt (Deuda)
+// ============================================
+// Deudas que el usuario necesita pagar
+model Debt {
+  id           Int        @id @default(autoincrement())
+  userId       Int        @map("user_id")
+  name         String     @db.VarChar(100)
+  creditor     String?    @db.VarChar(100) // Nombre del acreedor (opcional)
+  totalAmount  Decimal    @map("total_amount") @db.Decimal(15, 2)
+  paidAmount   Decimal    @default(0) @map("paid_amount") @db.Decimal(15, 2)
+  interestRate Decimal    @default(0) @map("interest_rate") @db.Decimal(5, 2) // Tasa de interés en porcentaje
+  deadline     DateTime   @db.Date
+  status       DebtStatus @default(active)
+  notes        String?    @db.Text
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+
+  // Relaciones
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payments DebtPayment[]
+
+  @@index([userId, status], name: "idx_user_status")
+  @@map("debts")
+}
+
+// ============================================
+// MODELO: DebtPayment (Pago de Deuda)
+// ============================================
+// Pagos realizados para saldar deudas
+model DebtPayment {
+  id            Int      @id @default(autoincrement())
+  debtId        Int      @map("debt_id")
+  transactionId Int      @map("transaction_id")
+  amount        Decimal  @db.Decimal(15, 2)
+  paymentDate   DateTime @map("payment_date") @db.Date
+  note          String?  @db.Text
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  // Relaciones
+  debt        Debt        @relation(fields: [debtId], references: [id], onDelete: Cascade)
+  transaction Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  @@index([debtId], name: "idx_debt")
+  @@index([transactionId], name: "idx_transaction")
+  @@map("debt_payments")
+}
+
+// ============================================
+// ENUMS (Tipos de datos especiales)
+// ============================================
+// CategoryType: Define si una categoría es de ingreso o gasto
+enum CategoryType {
+  income  // Ingreso
+  expense // Gasto
+}
+
+// TransactionType: Define si una transacción es de ingreso o gasto
+enum TransactionType {
+  income  // Ingreso
+  expense // Gasto
+}
+
+// GoalStatus: Estados posibles de una meta
+enum GoalStatus {
+  active    // Activa (en progreso)
+  completed // Completada
+  archived  // Archivada
+}
+
+// DebtStatus: Estados posibles de una deuda
+enum DebtStatus {
+  active   // Activa (aún se debe)
+  paid     // Pagada
+  archived // Archivada
+}
