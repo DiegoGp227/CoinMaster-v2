@@ -1,12 +1,10 @@
 # ============================================
 # DOCKERFILE PARA BACKEND CON PRISMA
 # ============================================
-# Multi-stage build para optimizar el tamaño de la imagen
 
 # ============================================
 # Etapa 1: Builder
 # ============================================
-# Instala dependencias y genera cliente de Prisma
 FROM node:20-alpine AS builder
 
 # Instalar OpenSSL (requerido por Prisma)
@@ -16,14 +14,14 @@ WORKDIR /app
 
 # Copiar archivos de dependencias
 COPY package*.json ./
-COPY prisma.config.ts ./
 COPY prisma ./prisma
 
 # Instalar todas las dependencias (incluyendo devDependencies)
 RUN npm ci
 
+ENV DATABASE_URL="mysql://dummy:dummy@localhost:3306/dummy"
+
 # Generar cliente de Prisma
-# IMPORTANTE: Esto debe ejecutarse DESPUÉS de instalar dependencias
 RUN npx prisma generate
 
 # Copiar el resto del código fuente
@@ -35,7 +33,6 @@ RUN npm run build
 # ============================================
 # Etapa 2: Producción
 # ============================================
-# Imagen final ligera con solo lo necesario
 FROM node:20-alpine AS production
 
 # Instalar OpenSSL (requerido por Prisma)
@@ -45,7 +42,6 @@ WORKDIR /app
 
 # Copiar archivos de configuración
 COPY package*.json ./
-COPY prisma.config.ts ./
 COPY prisma ./prisma
 
 # Instalar SOLO dependencias de producción
@@ -71,7 +67,7 @@ USER nodejs
 # Exponer puerto
 EXPOSE 4001
 
-# Variables de entorno por defecto (serán sobrescritas por docker-compose)
+# Variables de entorno por defecto
 ENV NODE_ENV=production
 ENV PORT=4001
 
@@ -80,6 +76,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
   CMD node -e "require('http').get('http://localhost:4001/ping', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
 
 # Script de inicio
-# 1. Aplica migraciones de Prisma (si existen)
-# 2. Inicia el servidor
 CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/index.js"]
